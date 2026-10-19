@@ -80,19 +80,19 @@ async function copy() {
   <h1>ตั้งค่า</h1>
   <p v-if="loading" class="loading-text"><Loader2 class="spin" :size="22" />กำลังโหลดการตั้งค่า...</p>
   <p class="muted" style="margin: 6px 0 24px">ข้อมูลร้าน ความปลอดภัย และการเชื่อมต่อจอครัว</p>
-  <div style="display: grid; grid-template-columns: 1fr 460px; gap: 24px; align-items: start">
+  <div class="split" style="--side: 460px">
     <div class="stack" style="gap: 24px">
       <div class="card stack" style="gap: 18px">
         <h2>ข้อมูลร้าน</h2>
-        <div class="row" style="align-items: stretch">
+        <div class="row wrap" style="align-items: stretch">
           <label class="field grow"><span>ชื่อร้าน *</span><input v-model="f.shop_name" /></label>
-          <label class="field" style="width: 220px"><span>จำนวนโต๊ะ *</span><input v-model.number="f.table_count" type="number" min="1" max="99" /><small class="muted">เลขโต๊ะ 1–{{ f.table_count || 0 }}</small></label>
+          <label class="field fixed" style="--w: 220px"><span>จำนวนโต๊ะ *</span><input v-model.number="f.table_count" type="number" min="1" max="99" /><small class="muted">เลขโต๊ะ 1–{{ f.table_count || 0 }}</small></label>
         </div>
         <label class="field"><span>ที่อยู่ร้าน (แสดงบนใบเสร็จ)</span><textarea v-model="f.shop_address" style="min-height: 72px" /></label>
       </div>
       <div class="card stack" style="gap: 18px">
         <div class="row spread"><h2>เปลี่ยน PIN แคชเชียร์</h2><span class="pill grey">6 หลัก</span></div>
-        <div class="row" style="align-items: stretch">
+        <div class="row wrap" style="align-items: stretch">
           <label class="field grow"><span>PIN ใหม่</span><input v-model="pin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" /></label>
           <label class="field grow"><span>ยืนยัน PIN ใหม่</span><input v-model="pin2" type="password" inputmode="numeric" maxlength="6" autocomplete="off" /></label>
         </div>

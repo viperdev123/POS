@@ -32,25 +32,26 @@ async function toggle(m: MenuItem) {
 </script>
 
 <template>
-  <div class="row spread" style="margin-bottom: 24px">
+  <div class="row spread wrap" style="margin-bottom: 24px">
     <div><h1>เมนูอาหาร</h1><p class="muted" style="margin-top: 6px">ดูแลเมนู ราคา และสถานะการขายของร้าน</p></div>
     <button @click="router.push('/owner/menu/new')"><Plus :size="20" />เพิ่มเมนู</button>
   </div>
 
-  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px">
+  <div class="grid-stats" style="margin-bottom: 20px">
     <div class="card"><span class="muted small">เมนูทั้งหมด</span><div style="font-size: 32px; font-weight: 700; margin-top: 6px">{{ items.length }} เมนู</div></div>
     <div class="card"><span class="muted small">เปิดขาย</span><div style="font-size: 32px; font-weight: 700; margin-top: 6px">{{ openCount }} เมนู</div></div>
     <div class="card"><span class="muted small">ปิดชั่วคราว</span><div style="font-size: 32px; font-weight: 700; margin-top: 6px">{{ items.length - openCount }} เมนู</div></div>
   </div>
 
   <div class="card">
-    <div class="row" style="align-items: stretch; margin-bottom: 20px">
+    <div class="toolbar">
       <label class="field grow"><span>ค้นหาเมนู</span><input v-model="q" placeholder="ค้นหาจากชื่อเมนู..." /></label>
-      <label class="field" style="width: 280px"><span>หมวดหมู่</span><select v-model="cat"><option value="">ทุกหมวดหมู่</option><option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option></select></label>
+      <label class="field fixed" style="--w: 280px"><span>หมวดหมู่</span><select v-model="cat"><option value="">ทุกหมวดหมู่</option><option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option></select></label>
       <button class="secondary" @click="router.push('/owner/categories')"><FolderOpen :size="20" />จัดการหมวดหมู่</button>
     </div>
     <div v-if="err" class="notice danger" style="margin-bottom: 12px">{{ err }}</div>
 
+    <div class="table-scroll"><div class="inner">
     <div class="row small muted" style="background: #f3f4f4; border-radius: 12px; padding: 14px 16px; font-weight: 500">
       <span style="flex: 3">เมนูอาหาร</span><span style="flex: 2">หมวดหมู่</span><span style="flex: 3">ขนาด / ราคา</span><span style="flex: 1">เปิดขาย</span><span style="width: 90px">จัดการ</span>
     </div>
@@ -65,6 +66,7 @@ async function toggle(m: MenuItem) {
       <div style="flex: 1"><input class="switch" type="checkbox" :checked="m.is_active" :aria-label="`เปิดขาย ${m.name}`" @change="toggle(m)" /></div>
       <button class="secondary" style="width: 90px" @click="router.push(`/owner/menu/${m.id}`)">แก้ไข</button>
     </div>
+    </div></div>
     <p v-if="!loaded" class="loading-text" style="padding: 24px 16px"><Loader2 class="spin" :size="22" />กำลังโหลดเมนู...</p>
     <p v-else-if="!shown.length" class="muted" style="padding: 24px 16px">ไม่พบเมนู</p>
     <div class="row spread" style="margin-top: 16px"><span class="muted small">แสดง {{ shown.length }} จาก {{ items.length }} เมนู · {{ categories.length }} หมวดหมู่</span><span class="pill">อัปเดตไปยังแคชเชียร์อัตโนมัติ</span></div>

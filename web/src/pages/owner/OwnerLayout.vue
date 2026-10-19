@@ -34,8 +34,8 @@ async function logout() {
 </script>
 
 <template>
-  <div style="display: grid; grid-template-columns: 264px 1fr; min-height: 100vh">
-    <aside style="background: #213d33; color: #fff; padding: 28px 20px; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh">
+  <div class="owner-shell">
+    <aside class="owner-side">
       <strong style="font-size: 22px; padding: 0 8px 28px">{{ shop || 'ร้านของฉัน' }}</strong>
       <nav class="stack" style="gap: 6px">
         <router-link v-for="n in NAV" :key="n.to" :to="n.to" style="padding: 14px 16px; border-radius: 12px; color: #fff; text-decoration: none; font-weight: 500"
@@ -47,13 +47,13 @@ async function logout() {
     </aside>
 
     <div>
-      <header class="row spread" style="background: #fff; border-bottom: 1px solid var(--border); padding: 0 32px; min-height: 64px">
+      <header class="row spread wrap owner-top">
         <span class="muted small">พื้นที่จัดการร้าน / {{ crumb }}</span>
         <span v-if="open !== null" class="row small" style="gap: 8px; color: var(--green); font-weight: 500">
           <span style="width: 10px; height: 10px; border-radius: 50%; background: currentColor" :style="open ? {} : { color: '#9aa5a1' }" />{{ open ? 'เปิดร้านแล้ว' : 'ยังไม่เปิดร้าน' }} · เจ้าของร้าน
         </span>
       </header>
-      <main style="padding: 32px"><router-view /></main>
+      <main class="owner-main"><router-view /></main>
     </div>
   </div>
 </template>

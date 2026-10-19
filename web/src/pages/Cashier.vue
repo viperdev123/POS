@@ -24,7 +24,7 @@ onUnmounted(() => document.removeEventListener('visibilitychange', onVisible))
   <PinScreen v-if="!cs.token" />
   <template v-else-if="cs.data">
     <AppHeader :shop="cs.data.settings.shop_name" :page="PAGE[cs.view]" :status="status" :status-on="!!shift && cs.view !== 'summary'" />
-    <div v-if="cs.err && cs.view === 'home'" class="notice danger" style="margin: 16px 32px 0">{{ cs.err }}</div>
+    <div v-if="cs.err && cs.view === 'home'" class="notice danger" style="margin: 16px 24px 0">{{ cs.err }}</div>
     <Summary v-if="cs.view === 'summary'" />
     <StoreClosed v-else-if="!shift" />
     <Home v-else-if="cs.view === 'home'" />

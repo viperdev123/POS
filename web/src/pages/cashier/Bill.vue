@@ -42,7 +42,7 @@ async function onTrash(i: any) {
 </script>
 
 <template>
-  <div v-if="order" style="display: grid; grid-template-columns: 1fr 520px; gap: 24px; padding: 24px 32px; align-items: start">
+  <div v-if="order" class="split wide pad" style="--side: 520px">
     <section>
       <div class="row" style="margin-bottom: 16px">
         <button class="secondary" @click="backToHome"><ArrowLeft :size="20" />กลับ</button>
@@ -54,7 +54,7 @@ async function onTrash(i: any) {
         <button :class="{ on: !cat }" @click="cat = ''">ทั้งหมด</button>
         <button v-for="c in cs.data.categories" :key="c.id" :class="{ on: cat === c.id }" @click="cat = c.id">{{ c.name }}</button>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px">
+      <div class="grid-menu">
         <div v-for="m in menu" :key="m.id" class="card" role="button" style="padding: 8px; cursor: pointer" :style="m.is_active ? {} : { background: '#eceeed', opacity: 0.75, cursor: 'not-allowed' }" @click="tap(m)">
           <img v-if="m.image_path" :src="imageUrl(m.image_path)" alt="" loading="lazy" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px" />
           <div v-else style="aspect-ratio: 4 / 3; border-radius: 10px; background: #e3e6e5" />
@@ -66,9 +66,9 @@ async function onTrash(i: any) {
       <p class="muted small" style="margin-top: 16px">ราคาทุกรายการรวม VAT 7% แล้ว · แตะเมนูเพื่อเพิ่มในบิล</p>
     </section>
 
-    <aside class="card" style="position: sticky; top: 16px; padding: 24px; display: flex; flex-direction: column; min-height: calc(100vh - 140px)">
+    <aside class="card bill-aside">
       <div class="row spread" style="align-items: flex-start">
-        <h1 style="font-size: 34px">{{ orderTitle(order) }}</h1>
+        <h1 style="font-size: clamp(26px, 4vw, 34px)">{{ orderTitle(order) }}</h1>
         <button class="link" :disabled="order.status !== 'open'" @click="voidOpen = true">ยกเลิกบิล</button>
       </div>
       <p class="muted small" style="margin: 4px 0 12px">บิล #{{ pad3(order.order_no) }} · เปิด {{ thTime(order.created_at) }} น.</p>
@@ -107,7 +107,7 @@ async function onTrash(i: any) {
           <button v-else class="link" style="color: var(--primary)" :disabled="!liveLines.length" @click="discountOpen = true">+ เลือก</button>
         </div>
         <div v-if="Number(order.rounding)" class="row spread muted small"><span>ปัดเศษ</span><span class="num">+{{ baht(order.rounding) }}</span></div>
-        <div class="row spread" style="margin-top: 6px"><strong class="muted" style="font-size: 20px">ยอดสุทธิ</strong><strong class="num" style="font-size: 40px">{{ baht(order.net) }}</strong></div>
+        <div class="row spread" style="margin-top: 6px"><strong class="muted" style="font-size: 20px">ยอดสุทธิ</strong><strong class="num" style="font-size: clamp(30px, 5vw, 40px)">{{ baht(order.net) }}</strong></div>
         <p class="muted small" style="margin: 4px 0 14px">รวม VAT 7% แล้ว {{ baht(order.vat) }}</p>
         <div class="row">
           <button class="secondary grow big" :disabled="!unsentCount || busy('send')" @click="sendKitchen"><Loader2 v-if="busy('send')" class="spin" :size="22" /><ChefHat v-else :size="22" />{{ busy('send') ? 'กำลังส่ง...' : 'ส่งครัว' }}<template v-if="unsentCount && !busy('send')"> ({{ unsentCount }})</template></button>

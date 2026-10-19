@@ -135,7 +135,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="invalid" style="display: grid; place-items: center; min-height: 100vh">
+  <div v-if="invalid" class="full" style="display: grid; place-items: center; padding: 16px">
     <div class="card" style="text-align: center; max-width: 420px; padding: 40px">
       <Link2Off :size="40" color="#c34343" />
       <h2 style="margin: 16px 0 8px">ลิงก์ไม่ถูกต้อง/หมดอายุ</h2>
@@ -145,12 +145,12 @@ onUnmounted(() => {
   </div>
 
   <template v-else>
-    <header class="row spread" style="background: #fff; border-bottom: 1px solid var(--border); padding: 12px 32px">
+    <header class="row spread app-header">
       <div class="row">
         <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center"><UtensilsCrossed :size="24" /></div>
-        <div><strong style="font-size: 20px">{{ shop }}</strong><div class="muted small">อร่อยทุกมื้อ ดูแลง่ายทุกวัน</div></div>
+        <div><strong style="font-size: 20px">{{ shop }}</strong><div class="muted small tagline">อร่อยทุกมื้อ ดูแลง่ายทุกวัน</div></div>
       </div>
-      <div class="row" style="gap: 20px">
+      <div class="row wrap" style="gap: 8px 20px">
         <span class="row" style="gap: 8px; font-weight: 500" :style="{ color: connected ? 'var(--green)' : 'var(--danger)' }">
           <span style="width: 10px; height: 10px; border-radius: 50%; background: currentColor" />{{ connected ? 'เชื่อมต่อสด' : 'ขาดการเชื่อมต่อ' }}
         </span>
@@ -159,10 +159,10 @@ onUnmounted(() => {
       </div>
     </header>
 
-    <main style="padding: 24px 32px">
-      <div class="row spread" style="margin-bottom: 16px">
+    <main class="pad">
+      <div class="row spread wrap" style="margin-bottom: 16px">
         <h1>{{ tab === 'todo' ? 'ออเดอร์ในครัว' : 'ออเดอร์ที่ทำเสร็จแล้ว' }}</h1>
-        <div class="seg" style="width: 440px">
+        <div class="seg" style="width: 440px; max-width: 100%">
           <button :class="{ on: tab === 'todo' }" @click="tab = 'todo'">กำลังดำเนินการ · {{ todo.length }}</button>
           <button :class="{ on: tab === 'done' }" @click="tab = 'done'">เสร็จแล้ว · {{ done.length }}</button>
         </div>
@@ -177,8 +177,8 @@ onUnmounted(() => {
       <div v-if="tab === 'done'" class="notice success" style="margin-bottom: 16px"><CircleCheck :size="20" />แสดงออเดอร์ที่ทำเสร็จของรอบเปิดร้านนี้ · เรียงจากล่าสุด</div>
       <div v-if="err" class="notice danger" style="margin-bottom: 16px">{{ err }}</div>
 
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch">
-        <div v-for="o in shown" :key="o.id" class="card" style="display: flex; flex-direction: column; min-height: 440px; padding: 24px"
+      <div class="grid-kitchen">
+        <div v-for="o in shown" :key="o.id" class="card" style="display: flex; flex-direction: column; min-height: 360px; padding: 20px"
           :style="o.kitchen_status === 'cooking' ? { borderColor: 'var(--primary)', borderWidth: '2px' } : {}">
           <div class="row spread"><strong style="font-size: 32px">{{ orderTitle(o) }}</strong><span class="pill" :class="PILL[o.kitchen_status]">{{ LABEL[o.kitchen_status] }}</span></div>
           <p class="muted" style="margin: 4px 0 14px">สั่ง {{ thTime(orderedAt(o)) }} น.<template v-if="o.kitchen_status === 'done' && o.kitchen_done_at"> · {{ thTime(o.kitchen_done_at) }} น.</template><template v-else> · รอ {{ waitMin(o) }} นาที</template></p>

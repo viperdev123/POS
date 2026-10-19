@@ -33,7 +33,7 @@ async function toggle(r: Row) {
 </script>
 
 <template>
-  <div class="row spread" style="margin-bottom: 24px">
+  <div class="row spread wrap" style="margin-bottom: 24px">
     <div><h1>โปรโมชัน</h1><p class="muted" style="margin-top: 6px">สร้างข้อเสนอที่เหมาะกับร้าน เปิดใช้งานได้ตามต้องการ</p></div>
     <button @click="router.push('/owner/promos/new')"><Plus :size="20" />สร้างโปรโมชัน</button>
   </div>

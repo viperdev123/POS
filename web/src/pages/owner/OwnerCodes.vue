@@ -41,20 +41,21 @@ const detail = (r: Row) => `${r.min_total ? 'ยอดขั้นต่ำ ฿'
 </script>
 
 <template>
-  <div class="row spread" style="margin-bottom: 24px">
+  <div class="row spread wrap" style="margin-bottom: 24px">
     <div><h1>โค้ดส่วนลด</h1><p class="muted" style="margin-top: 6px">กำหนดสิทธิ์ เงื่อนไข และจำนวนครั้งที่ใช้ได้</p></div>
     <button @click="router.push('/owner/codes/new')"><Plus :size="20" />สร้างโค้ดส่วนลด</button>
   </div>
-  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px">
+  <div class="grid-stats" style="margin-bottom: 20px">
     <div class="card"><span class="muted small">โค้ดทั้งหมด</span><div style="font-size: 32px; font-weight: 700; margin-top: 6px">{{ rows.length }} โค้ด</div></div>
     <div class="card"><span class="muted small">กำลังใช้งาน</span><div style="font-size: 32px; font-weight: 700; margin-top: 6px">{{ activeCount }} โค้ด</div></div>
     <div class="card"><span class="muted small">ใช้สิทธิ์แล้ว</span><div style="font-size: 32px; font-weight: 700; margin-top: 6px">{{ used }} ครั้ง</div></div>
   </div>
   <div class="card">
-    <div class="row" style="align-items: stretch; margin-bottom: 20px">
+    <div class="toolbar">
       <label class="field grow"><span>ค้นหาโค้ด</span><input v-model="q" placeholder="พิมพ์โค้ดส่วนลด..." /></label>
-      <label class="field" style="width: 280px"><span>สถานะ</span><select v-model="status"><option value="">ทุกสถานะ</option><option value="on">ใช้งาน</option><option value="off">ปิดใช้</option><option value="expired">หมดอายุ</option><option value="full">ครบจำนวน</option></select></label>
+      <label class="field fixed" style="--w: 280px"><span>สถานะ</span><select v-model="status"><option value="">ทุกสถานะ</option><option value="on">ใช้งาน</option><option value="off">ปิดใช้</option><option value="expired">หมดอายุ</option><option value="full">ครบจำนวน</option></select></label>
     </div>
+    <div class="table-scroll"><div class="inner">
     <div class="row small muted" style="background: #f3f4f4; border-radius: 12px; padding: 14px 16px; font-weight: 500">
       <span style="flex: 2">โค้ด</span><span style="flex: 4">ชนิด / เงื่อนไข</span><span style="flex: 2">ใช้แล้ว / จำกัด</span><span style="flex: 2">หมดอายุ</span><span style="flex: 1.5">สถานะ</span><span style="width: 90px">จัดการ</span>
     </div>
@@ -66,6 +67,7 @@ const detail = (r: Row) => `${r.min_total ? 'ยอดขั้นต่ำ ฿'
       <span style="flex: 1.5"><span class="pill" :class="STATE[stateOf(r)][1]">{{ STATE[stateOf(r)][0] }}</span></span>
       <button class="secondary" style="width: 90px" @click="router.push(`/owner/codes/${r.id}`)">แก้ไข</button>
     </div>
+    </div></div>
     <p v-if="!loaded" class="loading-text" style="padding: 24px 16px"><Loader2 class="spin" :size="22" />กำลังโหลดโค้ด...</p>
     <p v-else-if="!shown.length" class="muted" style="padding: 24px 16px">ไม่พบโค้ด</p>
     <p class="muted small" style="margin-top: 16px">แสดง {{ shown.length }} จาก {{ rows.length }} โค้ด</p>

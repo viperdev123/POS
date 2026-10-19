@@ -103,7 +103,7 @@ async function save() {
 
 <template>
   <p v-if="loading" class="loading-text"><Loader2 class="spin" :size="22" />กำลังโหลดข้อมูลโปรโมชัน...</p>
-  <div class="row spread" style="margin-bottom: 24px">
+  <div class="row spread wrap" style="margin-bottom: 24px">
     <div><h1>{{ id ? 'แก้ไขโปรโมชัน' : 'สร้างโปรโมชัน' }}</h1><p class="muted" style="margin-top: 6px">เลือกประเภทและกำหนดเงื่อนไขก่อนเปิดใช้</p></div>
     <button class="secondary" @click="router.push('/owner/promos')">กลับไปโปรโมชัน</button>
   </div>
@@ -111,13 +111,13 @@ async function save() {
     <button v-for="(label, t) in PROMO_TYPES" :key="t" :class="{ on: f.type === t }" :disabled="!!id && f.type !== t" style="min-height: 56px" @click="f.type = t">{{ label }}</button>
   </div>
 
-  <div style="display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start">
+  <div class="split" style="--side: 380px">
     <div class="card stack" style="gap: 20px">
       <h2>ข้อมูล{{ PROMO_TYPES[f.type] }}</h2>
       <label class="field"><span>ชื่อโปรโมชัน *</span><input v-model="f.name" /></label>
 
       <template v-if="f.type === 'happy_hour' || f.type === 'spend_x_get_y'">
-        <div class="row" style="align-items: stretch">
+        <div class="row wrap" style="align-items: stretch">
           <div class="stack" style="gap: 6px"><strong class="small">{{ f.type === 'happy_hour' ? 'รูปแบบส่วนลด' : 'รูปแบบส่วนลด' }}</strong>
             <div class="seg"><button :class="{ on: f.kind === 'percent' }" @click="f.kind = 'percent'">เปอร์เซ็นต์ (%)</button><button :class="{ on: f.kind === 'baht' }" @click="f.kind = 'baht'">จำนวนเงิน (บาท)</button></div></div>
           <label class="field grow"><span>ส่วนลด *</span><input v-model.number="f.value" type="number" min="0" step="0.01" /></label>
@@ -127,7 +127,7 @@ async function save() {
       <div v-if="f.type === 'spend_x_get_y'" class="notice"><Info :size="20" /><div><b>คำนวณจากยอดรายการก่อนส่วนลด</b>เมื่อบิลมียอดครบ ฿{{ f.min_total ?? 0 }} แคชเชียร์จึงจะเลือกใช้โปรนี้ได้</div></div>
 
       <template v-if="f.type === 'happy_hour'">
-        <div class="row" style="align-items: stretch"><label class="field grow"><span>เวลาเริ่ม *</span><input v-model="f.start" type="time" /></label><label class="field grow"><span>เวลาสิ้นสุด *</span><input v-model="f.end" type="time" /></label></div>
+        <div class="row wrap" style="align-items: stretch"><label class="field grow"><span>เวลาเริ่ม *</span><input v-model="f.start" type="time" /></label><label class="field grow"><span>เวลาสิ้นสุด *</span><input v-model="f.end" type="time" /></label></div>
         <div><strong class="small">วันที่ใช้งาน *</strong>
           <div class="row wrap" style="margin-top: 8px; gap: 18px"><label v-for="[l, n] in DAY_COLS" :key="n" class="row" style="gap: 8px"><input v-model="f.days" type="checkbox" :value="n" style="width: 22px; min-height: 22px" />{{ l }}</label></div></div>
       </template>
@@ -144,10 +144,10 @@ async function save() {
       </template>
 
       <template v-if="f.type === 'set_menu'">
-        <div v-for="(s, n) in f.setItems" :key="n" class="row" style="align-items: stretch">
+        <div v-for="(s, n) in f.setItems" :key="n" class="row wrap" style="align-items: stretch">
           <label class="field grow"><span>เมนู *</span>
             <select v-model="s.menu_item_id" @change="s.size_name = null"><option value="" disabled>เลือกเมนู</option><option v-for="m in menu" :key="m.id" :value="m.id">{{ m.name }}</option></select></label>
-          <label class="field" style="width: 260px"><span>ขนาดคงที่ *</span>
+          <label class="field fixed" style="--w: 260px"><span>ขนาดคงที่ *</span>
             <select v-model="s.size_name" :disabled="!item(s.menu_item_id)?.has_sizes"><option :value="null">{{ item(s.menu_item_id)?.has_sizes ? 'เลือกขนาด' : 'ปกติ · ฿' + unit(item(s.menu_item_id)) }}</option>
               <option v-for="z in item(s.menu_item_id)?.menu_sizes ?? []" :key="z.name" :value="z.name">{{ z.name }} · ฿{{ Number(z.price) }}</option></select></label>
           <button class="secondary" @click="f.setItems.splice(n, 1)">ลบ</button>
@@ -169,7 +169,7 @@ async function save() {
   </div>
 
   <div v-if="msg" class="notice danger" style="margin-top: 16px">{{ msg }}</div>
-  <div class="row spread" style="margin-top: 24px">
+  <div class="row spread wrap" style="margin-top: 24px">
     <span class="muted small">ตรวจสอบข้อมูลก่อนบันทึก</span>
     <div class="row"><button class="secondary" @click="router.push('/owner/promos')">ยกเลิก</button><button :disabled="busy || loading" @click="save"><Loader2 v-if="busy" class="spin" :size="20" /><Check v-else :size="20" />{{ busy ? 'กำลังบันทึก...' : 'บันทึกโปรโมชัน' }}</button></div>
   </div>

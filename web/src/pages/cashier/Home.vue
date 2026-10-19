@@ -18,18 +18,18 @@ const kitchenPill = (o: any) => (o.status === 'open' && !o.order_items.some((i: 
 </script>
 
 <template>
-  <div style="display: grid; grid-template-columns: 1fr 360px; gap: 28px; padding: 28px 32px">
+  <div class="split pad" style="--side: 360px; gap: 28px">
     <section>
-      <div class="row spread" style="margin-bottom: 20px">
+      <div class="row spread wrap" style="margin-bottom: 20px">
         <div>
           <h1>ดูแลทุกโต๊ะในที่เดียว</h1>
           <p class="muted" style="margin-top: 6px">เลือกโต๊ะเพื่อเปิดบิล หรือเพิ่มรายการอาหาร</p>
         </div>
         <span class="pill">ว่าง {{ tables.length - busyCount }} · กำลังทาน {{ busyCount }}</span>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px">
+      <div class="grid-tables">
         <button v-for="n in tables" :key="n" class="card" :aria-label="`โต๊ะ ${n}`"
-          style="flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 10px; text-align: left; min-height: 150px; padding: 20px; color: var(--ink); font-weight: 400"
+          style="flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 10px; text-align: left; min-height: 130px; padding: 16px; color: var(--ink); font-weight: 400"
           :style="{ ...(tableOrder(n) ? { background: 'var(--primary-soft)', borderColor: '#e5b9aa' } : {}), opacity: busy('table-' + n) ? 0.65 : 1 }" @click="openTable(n)">
           <div class="row spread"><strong style="font-size: 26px">โต๊ะ {{ n }}</strong><Armchair :size="22" :color="tableOrder(n) ? '#b65335' : '#237752'" /></div>
           <span class="pill" :class="tableOrder(n) ? 'primary' : ''" style="align-self: flex-start" :style="tableOrder(n) ? { background: 'transparent', padding: 0 } : {}">{{ tableOrder(n) ? 'กำลังทาน' : 'ว่าง' }}</span>
@@ -60,13 +60,13 @@ const kitchenPill = (o: any) => (o.status === 'open' && !o.order_items.some((i: 
     </aside>
   </div>
 
-  <footer class="row spread" style="position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 14px 32px">
+  <footer class="row spread home-footer">
     <span class="muted small">เปิดร้านวันนี้ {{ thTime(shift.opened_at) }} น. · {{ cs.data.settings.shop_name }}</span>
     <div class="row">
       <button class="secondary" @click="signOut"><LogOut :size="20" />ล็อกเอาท์</button>
       <button class="secondary" @click="closing = true"><Power :size="20" />ปิดร้าน</button>
     </div>
   </footer>
-  <div style="height: 80px" />
+  <div style="height: 96px" />
   <CloseShiftModal v-if="closing" :orders="openOrders" @close="closing = false" />
 </template>

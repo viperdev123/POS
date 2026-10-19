@@ -70,17 +70,17 @@ async function remove() {
 
 <template>
   <p v-if="loading" class="loading-text"><Loader2 class="spin" :size="22" />กำลังโหลดข้อมูลเมนู...</p>
-  <div class="row spread" style="margin-bottom: 24px">
+  <div class="row spread wrap" style="margin-bottom: 24px">
     <div><h1>{{ id ? 'แก้ไขเมนู · ' + f.name : 'เพิ่มเมนู' }}</h1><p class="muted" style="margin-top: 6px">กำหนดชื่อขนาดและราคาเต็มของแต่ละขนาด</p></div>
     <button class="secondary" @click="router.push('/owner/menu')">กลับไปเมนูอาหาร</button>
   </div>
 
-  <div style="display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start">
+  <div class="split" style="--side: 380px">
     <div class="card stack" style="gap: 20px">
       <h2>ข้อมูลเมนู</h2>
-      <div class="row" style="align-items: stretch">
+      <div class="row wrap" style="align-items: stretch">
         <label class="field grow"><span>ชื่อเมนู *</span><input v-model="f.name" /></label>
-        <label class="field" style="width: 280px"><span>หมวดหมู่ *</span><select v-model="f.category_id"><option value="" disabled>เลือกหมวดหมู่</option><option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option></select></label>
+        <label class="field fixed" style="--w: 280px"><span>หมวดหมู่ *</span><select v-model="f.category_id"><option value="" disabled>เลือกหมวดหมู่</option><option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option></select></label>
       </div>
       <div class="row spread" style="border-bottom: 1px solid var(--border); padding-bottom: 16px">
         <div><strong>มีหลายขนาด</strong><div class="muted small">กำหนดราคาเต็มแยกตามขนาด</div></div>
@@ -88,9 +88,9 @@ async function remove() {
       </div>
       <template v-if="f.has_sizes">
         <h2>ขนาดและราคา</h2>
-        <div v-for="(s, n) in f.sizes" :key="n" class="row" style="align-items: stretch">
+        <div v-for="(s, n) in f.sizes" :key="n" class="row wrap" style="align-items: stretch">
           <label class="field grow"><span>ชื่อขนาด *</span><input v-model="s.name" /></label>
-          <label class="field" style="width: 260px"><span>ราคาเต็ม (บาท) *</span><input v-model.number="s.price" type="number" min="0" step="0.01" /></label>
+          <label class="field fixed" style="--w: 260px"><span>ราคาเต็ม (บาท) *</span><input v-model.number="s.price" type="number" min="0" step="0.01" /></label>
           <button class="secondary" @click="f.sizes.splice(n, 1)">ลบ</button>
         </div>
         <button class="secondary" @click="f.sizes.push({ name: '', price: null })"><Plus :size="20" />เพิ่มขนาด</button>
@@ -124,7 +124,7 @@ async function remove() {
   </div>
 
   <div v-if="msg" class="notice danger" style="margin-top: 16px">{{ msg }}</div>
-  <div class="row spread" style="margin-top: 24px">
+  <div class="row spread wrap" style="margin-top: 24px">
     <span class="muted small">ตรวจสอบข้อมูลก่อนบันทึก <button v-if="id" class="link small" style="color: var(--danger); margin-left: 16px" @click="remove">ลบเมนูนี้</button></span>
     <div class="row"><button class="secondary" @click="router.push('/owner/menu')">ยกเลิก</button><button :disabled="busy || loading || uploading" @click="save"><Loader2 v-if="busy" class="spin" :size="20" /><Check v-else :size="20" />{{ busy ? 'กำลังบันทึก...' : 'บันทึกข้อมูล' }}</button></div>
   </div>

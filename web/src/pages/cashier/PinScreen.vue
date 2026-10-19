@@ -31,8 +31,8 @@ onUnmounted(() => window.removeEventListener('keydown', onKey))
 </script>
 
 <template>
-  <div style="display: grid; grid-template-columns: 40% 1fr; min-height: 100vh">
-    <aside style="background: #213d33; color: #fff; padding: 40px 44px; display: flex; flex-direction: column; justify-content: space-between">
+  <div class="auth full">
+    <aside style="background: #213d33; color: #fff; display: flex; flex-direction: column; justify-content: space-between">
       <div class="row"><div style="width: 40px; height: 40px; border-radius: 10px; background: #ffffff1f; display: grid; place-items: center"><UtensilsCrossed :size="20" /></div><strong>{{ shop }}</strong></div>
       <div>
         <UtensilsCrossed :size="44" color="#e0a98e" />

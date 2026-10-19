@@ -77,19 +77,19 @@ async function remove() {
 
 <template>
   <p v-if="loading" class="loading-text"><Loader2 class="spin" :size="22" />กำลังโหลดข้อมูลโค้ด...</p>
-  <div class="row spread" style="margin-bottom: 24px">
+  <div class="row spread wrap" style="margin-bottom: 24px">
     <div><h1>{{ id ? 'แก้ไขโค้ดส่วนลด' : 'สร้างโค้ดส่วนลด' }}</h1><p class="muted" style="margin-top: 6px">ระบุส่วนลด ข้อจำกัด และรายการที่ใช้โค้ดได้</p></div>
     <button class="secondary" @click="router.push('/owner/codes')">กลับไปโค้ดส่วนลด</button>
   </div>
-  <div style="display: grid; grid-template-columns: 1fr 420px; gap: 24px; align-items: start">
+  <div class="split" style="--side: 420px">
     <div class="card stack" style="gap: 20px">
       <h2>ข้อมูลโค้ด</h2>
-      <div class="row" style="align-items: stretch"><label class="field grow"><span>โค้ดส่วนลด *</span><input v-model="f.code" /></label><button class="secondary" @click="randomCode"><Shuffle :size="20" />สุ่มโค้ด</button></div>
-      <div class="row" style="align-items: stretch">
+      <div class="row wrap" style="align-items: stretch"><label class="field grow"><span>โค้ดส่วนลด *</span><input v-model="f.code" /></label><button class="secondary" @click="randomCode"><Shuffle :size="20" />สุ่มโค้ด</button></div>
+      <div class="row wrap" style="align-items: stretch">
         <div class="stack" style="gap: 6px"><strong class="small">ประเภทส่วนลด *</strong><div class="seg"><button :class="{ on: f.kind === 'baht' }" @click="f.kind = 'baht'">จำนวนเงิน (บาท)</button><button :class="{ on: f.kind === 'percent' }" @click="f.kind = 'percent'">เปอร์เซ็นต์ (%)</button></div></div>
         <label class="field grow"><span>มูลค่าส่วนลด *</span><input v-model.number="f.value" type="number" min="0" step="0.01" /></label>
       </div>
-      <div class="row" style="align-items: stretch">
+      <div class="row wrap" style="align-items: stretch">
         <label class="field grow"><span>ยอดขั้นต่ำ (บาท)</span><input v-model.number="f.min_total" type="number" min="0" placeholder="0" /></label>
         <label class="field grow"><span>วันหมดอายุ (เว้นว่าง = ไม่หมดอายุ)</span><input v-model="f.expires" type="date" /></label>
       </div>
@@ -117,7 +117,7 @@ async function remove() {
     </div>
   </div>
   <div v-if="msg" class="notice danger" style="margin-top: 16px">{{ msg }}</div>
-  <div class="row spread" style="margin-top: 24px">
+  <div class="row spread wrap" style="margin-top: 24px">
     <span class="muted small">ตรวจสอบข้อมูลก่อนบันทึก <button v-if="id" class="link small" style="color: var(--danger); margin-left: 16px" @click="remove">ลบโค้ดนี้</button></span>
     <div class="row"><button class="secondary" @click="router.push('/owner/codes')">ยกเลิก</button><button :disabled="busy || loading" @click="save"><Loader2 v-if="busy" class="spin" :size="20" /><Check v-else :size="20" />{{ busy ? 'กำลังบันทึก...' : id ? 'บันทึกโค้ดส่วนลด' : 'สร้างโค้ดส่วนลด' }}</button></div>
   </div>

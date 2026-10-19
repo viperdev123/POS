@@ -20,7 +20,7 @@ function back() {
 </script>
 
 <template>
-  <div v-if="r" style="display: grid; grid-template-columns: 420px 1fr; gap: 80px; max-width: 1100px; margin: 0 auto; padding: 40px 32px; align-items: start">
+  <div v-if="r" class="receipt-wrap">
     <div class="card print-area" style="padding: 32px">
       <div style="text-align: center"><h1 class="rcpt-title" style="font-size: 32px">{{ cs.data.settings.shop_name }}</h1><p class="muted small" style="margin: 8px 0">{{ cs.data.settings.shop_address }}</p><p class="muted small">ใบเสร็จรับเงิน</p></div>
       <hr style="border: 0; border-top: 1px solid var(--border); margin: 14px 0" />

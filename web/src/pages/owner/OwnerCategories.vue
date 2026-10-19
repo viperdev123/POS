@@ -54,11 +54,11 @@ async function drop(to: number) {
 </script>
 
 <template>
-  <div class="row spread" style="margin-bottom: 24px">
+  <div class="row spread wrap" style="margin-bottom: 24px">
     <div><h1>จัดการหมวดหมู่</h1><p class="muted" style="margin-top: 6px">จัดกลุ่มเมนูให้แคชเชียร์ค้นหาและรับออเดอร์ได้เร็วขึ้น</p></div>
     <button class="secondary" @click="router.push('/owner/menu')"><ArrowLeft :size="20" />กลับไปเมนูอาหาร</button>
   </div>
-  <div style="display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start">
+  <div class="split" style="--side: 380px">
     <div class="card">
       <div class="row spread" style="margin-bottom: 16px"><h2>หมวดหมู่ของร้าน</h2><span class="pill grey">{{ cats.length }} หมวดหมู่</span></div>
       <div v-for="(c, n) in cats" :key="c.id" class="row" draggable="true" style="background: #f3f4f4; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px"
