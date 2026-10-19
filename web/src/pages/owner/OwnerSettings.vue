@@ -91,12 +91,12 @@ async function copy() {
         <label class="field"><span>ที่อยู่ร้าน (แสดงบนใบเสร็จ)</span><textarea v-model="f.shop_address" style="min-height: 72px" /></label>
       </div>
       <div class="card stack" style="gap: 18px">
-        <div class="row spread"><h2>เปลี่ยน PIN แคชเชียร์</h2><span class="pill grey">4–6 หลัก</span></div>
+        <div class="row spread"><h2>เปลี่ยน PIN แคชเชียร์</h2><span class="pill grey">6 หลัก</span></div>
         <div class="row" style="align-items: stretch">
           <label class="field grow"><span>PIN ใหม่</span><input v-model="pin" type="password" inputmode="numeric" maxlength="6" autocomplete="off" /></label>
           <label class="field grow"><span>ยืนยัน PIN ใหม่</span><input v-model="pin2" type="password" inputmode="numeric" maxlength="6" autocomplete="off" /></label>
         </div>
-        <div><button class="secondary" :disabled="pin.length < 4 || pinBusy" @click="changePin"><Loader2 v-if="pinBusy" class="spin" :size="20" />{{ pinBusy ? 'กำลังเปลี่ยน...' : 'เปลี่ยน PIN' }}</button></div>
+        <div><button class="secondary" :disabled="pin.length < 6 || pinBusy" @click="changePin"><Loader2 v-if="pinBusy" class="spin" :size="20" />{{ pinBusy ? 'กำลังเปลี่ยน...' : 'เปลี่ยน PIN' }}</button></div>
         <div v-if="pinMsg" class="notice" :class="pinOk ? 'success' : 'danger'">{{ pinMsg }}</div>
       </div>
     </div>

@@ -54,10 +54,10 @@ async function onTrash(i: any) {
         <button :class="{ on: !cat }" @click="cat = ''">ทั้งหมด</button>
         <button v-for="c in cs.data.categories" :key="c.id" :class="{ on: cat === c.id }" @click="cat = c.id">{{ c.name }}</button>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px">
-        <div v-for="m in menu" :key="m.id" class="card" role="button" style="padding: 12px; cursor: pointer" :style="m.is_active ? {} : { background: '#eceeed', opacity: 0.75, cursor: 'not-allowed' }" @click="tap(m)">
-          <img v-if="m.image_path" :src="imageUrl(m.image_path)" alt="" loading="lazy" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px" />
-          <div v-else style="height: 150px; border-radius: 10px; background: #e3e6e5" />
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px">
+        <div v-for="m in menu" :key="m.id" class="card" role="button" style="padding: 8px; cursor: pointer" :style="m.is_active ? {} : { background: '#eceeed', opacity: 0.75, cursor: 'not-allowed' }" @click="tap(m)">
+          <img v-if="m.image_path" :src="imageUrl(m.image_path)" alt="" loading="lazy" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px" />
+          <div v-else style="aspect-ratio: 4 / 3; border-radius: 10px; background: #e3e6e5" />
           <div style="padding: 10px 4px 2px"><strong>{{ m.name }}</strong>
             <div class="row" style="margin-top: 4px"><strong :style="{ color: m.is_active ? 'var(--primary)' : 'var(--muted)' }">฿{{ priceText(m) }}</strong><span v-if="!m.is_active" class="pill grey">หมดชั่วคราว</span></div>
           </div>

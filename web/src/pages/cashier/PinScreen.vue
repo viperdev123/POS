@@ -12,7 +12,7 @@ const shop = localStorage.getItem('pos_shop') ?? 'ร้านของฉัน
 
 const press = (d: string) => { if (pin.value.length < 6) { pin.value += d; err.value = '' } }
 async function submit() {
-  if (pin.value.length < 4 || busy.value) return
+  if (pin.value.length < 6 || busy.value) return
   busy.value = true
   const e = await login(pin.value)
   busy.value = false
@@ -45,9 +45,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKey))
     <main style="display: grid; place-items: center; padding: 24px">
       <div style="width: 100%; max-width: 380px; text-align: center">
         <h1 style="font-size: 30px">เข้าสู่ระบบแคชเชียร์</h1>
-        <p class="muted" style="margin: 12px 0 20px">ใส่รหัส PIN 4–6 หลักเพื่อเริ่มใช้งาน</p>
+        <p class="muted" style="margin: 12px 0 20px">ใส่รหัส PIN 6 หลักเพื่อเริ่มใช้งาน</p>
         <div class="row" style="justify-content: center; gap: 18px; height: 28px; margin-bottom: 16px">
-          <span v-for="n in Math.max(4, pin.length)" :key="n" style="width: 18px; height: 18px; border-radius: 50%"
+          <span v-for="n in 6" :key="n" style="width: 18px; height: 18px; border-radius: 50%"
             :style="{ background: n <= pin.length ? (err ? 'var(--danger)' : 'var(--primary)') : '#d6dad8' }" />
         </div>
         <div v-if="err" class="notice danger" style="margin-bottom: 16px; text-align: left"><CircleAlert :size="20" />{{ err }}</div>
@@ -57,7 +57,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKey))
           <button class="secondary" style="min-height: 68px; font-size: 26px; font-weight: 500" @click="press('0')">0</button>
           <button class="secondary" style="min-height: 68px" aria-label="ลบ" @click="pin = pin.slice(0, -1)"><Delete :size="26" /></button>
         </div>
-        <button class="big" style="width: 100%; margin-top: 16px" :disabled="pin.length < 4 || busy" @click="submit"><Loader2 v-if="busy" class="spin" :size="22" />{{ busy ? 'กำลังตรวจสอบ...' : 'เข้าสู่ระบบ' }}</button>
+        <button class="big" style="width: 100%; margin-top: 16px" :disabled="pin.length < 6 || busy" @click="submit"><Loader2 v-if="busy" class="spin" :size="22" />{{ busy ? 'กำลังตรวจสอบ...' : 'เข้าสู่ระบบ' }}</button>
         <p class="muted small" style="margin-top: 20px">ลืมรหัส? ติดต่อเจ้าของร้านเพื่อเปลี่ยน PIN</p>
       </div>
     </main>

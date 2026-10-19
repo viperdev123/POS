@@ -109,7 +109,7 @@ const publicActions: Actions = {
 const ownerActions: Actions = {
   async set_cashier_pin({ body }) {
     const pin = str(body.pin, 'pin')
-    if (!/^\d{4,6}$/.test(pin)) throw new HttpError(400, 'PIN ต้องเป็นตัวเลข 4-6 หลัก')
+    if (!/^\d{6}$/.test(pin)) throw new HttpError(400, 'PIN ต้องเป็นตัวเลข 6 หลัก')
     ok(await db.from('settings').update({ cashier_pin_hash: await hashPin(pin), pin_fail_count: 0, pin_locked_until: null }).eq('id', 1))
     return { ok: true }
   },
